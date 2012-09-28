@@ -9,12 +9,12 @@ body {
 code {
     background: #efefef;
     padding: 2px 4px;
-    color: #c30;         
+    color: #c30;
 }
 
-p { 
-    line-height: 1.75em; 
-    margin-bottom: 1.2em; 
+p {
+    line-height: 1.75em;
+    margin-bottom: 1.2em;
 }
 
 strong { font-weight: bold; }
@@ -28,39 +28,39 @@ strong { font-weight: bold; }
 
 #wrapper header {
     border-bottom: 1px solid #ddd;
-    padding: 0 0 0.8em;            
+    padding: 0 0 0.8em;
 }
 
-#wrapper header h1 { 
-    font-size: 32px; 
-    margin: 0.5em 0 1.2em; 
+#wrapper header h1 {
+    font-size: 32px;
+    margin: 0.5em 0 1.2em;
 }
-#wrapper h1 small { 
-    font-size: 0.65em; 
+#wrapper h1 small {
+    font-size: 0.65em;
     color: #ddd;
-}            
+}
 
-#wrapper h1 small .difficulty { 
+#wrapper h1 small .difficulty {
     color: #c30;
     text-align: right;
-}        
+}
 
 
-#wrapper header h3 { 
-    font-size: 16px; 
-    color: #3cc; 
-    margin-bottom: 1.2em; 
+#wrapper header h3 {
+    font-size: 16px;
+    color: #3cc;
+    margin-bottom: 1.2em;
 }
 
 #wrapper .sample {
     background: #ededed;
-    color: #777; 
+    color: #777;
     border: 1px solid #cdcdcd;
     margin: 20px 0;
 }
 
-#wrapper .sample pre { 
-    padding: 10px 10px 0; 
+#wrapper .sample pre {
+    padding: 10px 10px 0;
 }
 
 #wrapper #output {
@@ -68,4 +68,9 @@ strong { font-weight: bold; }
     padding: 1em;
     color: #3cc;
     background: #3c3c3c;
+}
+
+#wrapper #output p {
+    line-height: 1.2em;
+    margin-bottom: 0;
 }

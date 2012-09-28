@@ -6,5 +6,9 @@
 $(document).ready(function() {
 
     // Put code here...
-
-});​
+    var lines = $('#input pre').text().split('\n');
+    $.each(lines, function(n, line) {
+       reversed = line.split(" ").reverse().join(" ");
+       $('#output').append('<p>' + reversed + '</p>');
+    });
+});
