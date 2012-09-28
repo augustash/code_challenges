@@ -24,12 +24,15 @@
 #
 #   $ ruby fibonacci_series.rb list.txt
 #
-require './fibber.rb'
+
+start_time = Time.now
 
 File.open(ARGV[0]).each_line do |n|
   # begin coding here
 
+  # Hash memoization
   fibonacci = Hash.new{ |h,k| h[k] = k < 2 ? k : h[k-1] + h[k-2] }
   puts fibonacci[n.to_i]
-
 end
+
+puts "\nCompleted in #{Time.now - start_time} ms"
