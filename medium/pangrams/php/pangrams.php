@@ -42,7 +42,43 @@
  * $lines = file('list.txt');
  */
 
-$lines = file($argv[1]);
+function main(){
+  
+  $lines = file('list.txt');
+  foreach($lines as $n){
+	print 'TEXT: '.$n;
+	pangram($n);
+	print "\n\n";
+  }
+  exit(0);
+}
+
+function pangram($text) {
+	$return = array();
+	$letters = array();
+    foreach (str_split($text) as $c) {
+        if ($c >= 'a' && $c <= 'z'){
+			$letters[$c] = $c;
+		}
+        else if ($c >= 'A' && $c <= 'Z'){
+			$c = strtolower($c);
+			$letters[$c] = $c;
+		}
+    }
+	print 'IS PANGRAM: '. (count($letters) == 26 ? 'Yes' : 'No') . "\n";
+	ksort($letters);
+	$all = explode(',','a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z');
+	$missing = array();
+	foreach($all as $letter){
+		if(!isset($letters[$letter])) $missing[$letter] = $letter;
+	}
+	if(!empty($missing)){
+		print 'MISSING: '.implode(', ', $missing)."\n";
+	}
+    return $return;
+}
+
+main();
 
 
 
