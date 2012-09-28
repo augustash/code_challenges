@@ -7,7 +7,9 @@
  * one number per line to the console (STDOUT)
  */
 
-
+for($i = 1; $i < 100; $i++){
+  if($i&1) print $i."\n";
+}
 
 
 ?>
