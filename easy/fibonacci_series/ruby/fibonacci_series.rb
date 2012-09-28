@@ -23,7 +23,19 @@
 # -- Example:
 # 
 #   $ ruby fibonacci_series.rb list.txt
-# 
-File.open(ARGV[0]).each_line do |line|
+#
+require './fibber.rb'
+
+File.open(ARGV[0]).each_line do |n|
   # begin coding here
+  fibber = Fibber.new
+
+  puts "Finding Fibonacci value at position #{n.to_i}"
+
+  puts "using Fibber#fib_array(n)"
+  puts fibber.fib_array(n)
+
+  puts "using Fibber#fib_iterative(n)"
+  puts fibber.fib_iterative(n)
+
 end
