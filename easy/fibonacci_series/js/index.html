@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- jQuery 1.8.2 -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src='fibonacci_series.js'></script>
+
+        <!-- CSS Styles -->
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+<body>
+    <div id="wrapper">
+        <header>
+            <h1>
+                Fibonacci Series
+                <small>// code challenge: <span class='difficulty'>easy</span></small>
+            </h1>
+            <h3>Instructions:</h3>
+            <p>
+                <strong>The Fibonacci series is defined as:</strong>
+                <br/><br />
+                
+                <code>F(0) = 0; F(1) = 1; F(n) = F(n-1) + F(n-2) when n > 1;</code> 
+                
+                <br /><br />
+
+                Given a text file containing one positive integer <code>n</code> per line, print out the <code>F(n)</code>.
+            </p>
+            <p>
+                If you wish to use the  <code>console.log()</code> you'll need to have Firebug or your browser's developer console enabled. 
+            </p>
+        </header>                
+        
+        <div class='sample'>
+            <pre>
+# Sample Input
+
+5
+12
+            </pre>            
+        
+        </div>
+        
+        <div class='sample'>
+            <pre>
+# Sample Output
+            
+5
+144
+            </pre>
+        </div>
+        
+        <p>
+            <strong>Use the following content of the <code>#input pre</code> element as the input to your method.</strong>
+        </p>
+
+        <div id='input'>
+            <pre>
+5
+8
+10
+12
+34
+55
+            </pre>            
+        </div>
+        <!-- optionally print odd numbers to this #output element -->
+        <div id='output'></div>
+    </div>
+</body>
+</html>
