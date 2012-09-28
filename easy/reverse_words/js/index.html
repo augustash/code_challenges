@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- jQuery 1.8.2 -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src='reverse_words.js'></script>
+
+        <!-- CSS Styles -->
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+<body>
+    <div id="wrapper">
+        <header>
+            <h1>
+                Reverse Words
+                <small>// code challenge: <span class='difficulty'>easy</span></small>
+            </h1>
+            <h3>Instructions:</h3>
+            <p>
+                Write a method to reverse the words of an input sentence. Reverse and print out each line's content as a new line to either the <code>console.log()</code> or the <code>#output</code> DOM element.
+            </p>
+            <p>
+                You may print the output of your solution via <code>console.log()</code> or insert into the <code>#output</code> element. If you wish to use the  <code>console.log()</code> you'll need to have Firebug or your browser's developer console enabled. 
+            </p>
+        </header>
+
+        <div class='sample'>
+            <pre>
+# Sample Input
+
+Hello World
+It's a trap
+            </pre>            
+        
+        </div>
+        
+        <div class='sample'>
+            <pre>
+# Sample Output
+            
+World Hello
+trap a It's
+            </pre>
+        </div>
+        
+        <p>
+            <strong>Use the following content of the <code>#input pre</code> element as the input to your method.</strong>
+        </p>
+
+        <div id='input'>
+            <pre>
+I'm Mac Daddy
+dead or alive
+iFhone 5
+So just buy
+and don't ask why
+you know you're gonna get an iFhone 5
+            </pre>            
+        </div>
+        
+        <!-- optionally print odd numbers to this #output element -->
+        <div id='output'></div>
+    </div>
+</body>
+</html>
