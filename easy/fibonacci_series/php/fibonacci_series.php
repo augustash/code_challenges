@@ -34,9 +34,32 @@
  * $lines = file('list.txt');
  */
 
-$lines = file($argv[1]);
+function main(){
+  
+  $lines = file('list.txt');
+  foreach($lines as $n){
+	fibonacci($n);
+  }
+  exit(0);
+}
 
+function fibonacci($n){
+  $a = 0;
+  $b = 1;
+  $output = array();
+  for ($i = 0; $i < $n; $i++){
+	$output[$a] = (integer) $a;
+    $sum = $a+$b;
+    $a = $b;
+    $b = $sum;
+  }
+  $last = end($output);
+  print implode(', ', $output);
+  print "\n\n";
+  print '-----------ANSWER:' . $last . '-----------';
+  print "\n\n\n";
+}
 
-
+main();
 
 ?>
