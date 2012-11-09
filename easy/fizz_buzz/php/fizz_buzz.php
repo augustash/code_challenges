@@ -11,7 +11,17 @@
  * `Fizz Buzz BOOM`.
  */
 
+$results = array();
 
+for ($i = 1; $i <= 100; $i++) {
+  $result = '';
+  if ($i % 4 == 0) $result = 'Fizz';
+  if ($i % 6 == 0) $result .= ' Buzz';
+  if ($i % (4 * 6) == 0) $result .= ' BOOM';
+  if (empty($result)) $result = $i;
+  $results[] = trim($result);
+}
 
+echo implode(', ', $results) . "\n";
 
 ?>
