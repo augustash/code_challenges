@@ -5,6 +5,13 @@
  */
 $(document).ready(function() {
 
-    // Put code here...
+    results = new Array();
+    
+    for (i = 1; i < 100; i++) {
+    	if (i % 2 === 1)
+    		results.push(i);
+    }
+    
+    $('div#output').html(results.join('<br />'));
 
-});​
+});

@@ -35,8 +35,14 @@
  */
 
 $lines = file($argv[1]);
+$sequence = array(0, 1);
 
+for ($i = 2; $i < 100; $i++) {
+  $sequence[$i] = $sequence[$i - 1] + $sequence[$i - 2];
+}
 
-
+foreach ($lines as $pos => $val) {
+  echo $sequence[(int) $val] . "\n";
+}
 
 ?>
