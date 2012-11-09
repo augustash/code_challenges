@@ -30,7 +30,12 @@
  *
  * $lines = file('list.txt');
  */
-$lines = file($argv[1]);
 
+$lines = file('list.txt');
+
+    foreach ($lines as $l) 
+    {
+        echo implode( ' ', array_reverse(explode(' ', trim($l))) )."\n";
+    }
 
 ?>
