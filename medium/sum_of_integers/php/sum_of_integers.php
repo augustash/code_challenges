@@ -37,8 +37,20 @@
  * $lines = file('list.txt');
  */
 
-$lines = file($argv[1]);
+function doit($range, $start = 0){
+  $sum = array_sum($range);
+  if($sum > $start) $start = $sum;
+  if (count($range) > 2) {
+	$sr1 = array_slice($range,0,-1); //First Chunk
+	$sr2 = array_slice($range,1); //Second Chunk
+	return max($start, max(doit($sr1, $start), doit($sr2, $start)));
+  }
+  return $start;
+}
 
-
-
-?>
+$lines = file('list.txt');
+foreach($lines as $n){
+  $n = rtrim($n);
+  $n = preg_split("/(, )|(,)/",$n);
+  print doit($n)."\n";
+}
