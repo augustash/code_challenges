@@ -24,6 +24,6 @@
 # 
 #   $ ruby reverse_words.rb list.txt
 # 
-File.open(ARGV[0]).each_line do |line|
-  # begin coding here
+File.open("list.txt").each_line do |line|
+  print line.split.reverse.join(' ') + "\n"
 end
