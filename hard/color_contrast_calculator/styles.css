@@ -12,10 +12,35 @@ code {
     color: #c30;
 }
 
-p {
+ul, ol {
+    padding: 0 0 0 2em;
+}
+
+ul li {
+    list-style: disc;
+}
+
+li {
+    line-height: 1.2em;
+    margin-bottom: 1.25em;
+}
+
+p, li {
     line-height: 1.75em;
     margin-bottom: 1.2em;
 }
+
+a, a:hover, a:active, a:visited {
+    color: #3cc;
+}
+
+blockquote {
+    font-style: italic;
+    border-left: 10px solid #ededed;
+    padding-left: 2em;
+    margin: 20px 0;
+}
+
 
 strong { font-weight: bold; }
 
@@ -24,7 +49,7 @@ strong { font-weight: bold; }
     margin: 30px auto;
     width: 90%;
     padding: 2.5%;
-}​
+}
 
 #wrapper header {
     border-bottom: 1px solid #ddd;
@@ -67,10 +92,6 @@ strong { font-weight: bold; }
     margin: 20px 0;
     padding: 1em;
     color: #3cc;
-    background: #3c3c3c;
+//    background: #3c3c3c;
 }
-
-#wrapper #output p {
-    line-height: 1.2em;
-    margin-bottom: 0;
-}
+​

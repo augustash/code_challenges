@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- jQuery 1.8.2 -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael.js"></script>
+    <script type="text/javascript" src='calculator.js'></script>
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <h1>
+                Contrast Calculator
+                <small>// <span class='difficulty'>advanced</span></small>
+            </h1>
+            <h3>Instructions:</h3>
+            <p>
+                A few years ago we were tasked with creating a color <a href="http://www.designersign.com/contrast-calculator">contrast calculator for a store front</a> to help customers comply with Americans with Disabilities Act (ADA). Over the years we've found that:
+                <ul>
+                    <li>maintaining the contrast calculator is cumbersome</li>
+                    <li>code is repeated numerous times, so any changes to the code needs to be applied multiple times</li>
+                    <li>the client is unable to make updates or changes without our assistance</li>
+                    <li>Flash is not supported for some mobile devices</li>
+                </ul>
+            </p>
+            <p>
+                We can address three of these four issues by porting the Flash application to Javascript (we'll leave the discussion of the client updating the colors for another day). For this advanced challenge, we'll be utilizing:
+                <ul>
+                    <li>
+                        <a href="http://raphaeljs.com/" title="RaphelJS.com">RaphaelJS</a> (see <a href="http://raphaeljs.com/reference.html" title="RaphaelJS Documentation">documentation</a>)
+                    </li>
+                    <li><a href="http://jquery.com/" title="jQuery">jQuery</a></li>
+                    <li>JSON</li>
+                </ul>
+            </p>
+
+            <h3>Assignment:</h3>
+            <p>
+                <strong>Your job will be to write an object-oriented Javascript class that will render an interactive contrast calculator and render that output to the <code>#output</code> element below</strong>. The color data is provided to you as <code>JSON</code> within the <code>data-color-values</code> attribute of the <code>div#colors</code> element.
+            </p>
+
+            <h4>Example Contrast Calculator (Flash Version)</h4>
+            <p>
+                <a href="http://www.gdriveurl.com/?idl=813542371640&out=1"><img src="http://www.gdriveurl.com/?idl=813542371640&out=1" alt="Color Contrast Calculator example" width='499px' height='352px' /></a>
+            </p>
+
+            <hr />
+
+            <h3>Example Color Data:</h3>
+            <pre style="overflow: auto; width:100%; background: #ddd; padding: 5px; margin:10px 0;">
+{
+  "background": {
+      "0": { "name": "10234 Misty Blue", "value": "8", "hex": "727A8F", "category": 2 }
+    , "1": { "name": "10563 Metalic Silver", "value": "93", "hex": "bbbbbb", "category": 2 }
+    , "2": { "name": "13 Rose", "value": "6", "hex": "895D5E", "category": 2 }
+    , "3": { "name": "142 Steel Blue", "value": "11", "hex": "788DA2", "category": 2 }
+    , "4": { "name": "144 Dark Blue Jean", "value": "4", "hex": "2E3547", "category": 2 }
+    , "5": { "name": "15 Scandinavian Sky", "value": "14", "hex": "9498A1", "category": 2 }
+    , "6": { "name": "15451 Bristol Blue", "value": "11", "hex": "29309B", "category": 2 }
+    , "7": { "name": "166 Shell Beige", "value": "26", "hex": "C2B6B6", "category": 2 }
+    , "8":  { "name": "167 Army Green", "value": "2", "hex": "40424F", "category": 2 }
+    , "9":  { "name": "173 Hazy Green", "value": "5", "hex": "3E433F", "category": 2 }
+    , "10": { "name": "199 Yellow Cream", "value": "20", "hex": "0B0819", "category": 2 }
+    , "11": { "name": "20044 Brown Mustard", "value": "4", "hex": "60513C", "category": 2 }
+    , "12": { "name": "20060 Moss", "value": "5", "hex": "867B5D", "category": 2 }
+    , "13": { "name": "20126 Twiggy Brown", "value": "9", "hex": "877D73", "category": 2 }
+    , "14": { "name": "20134 Nugat Brown", "value": "4", "hex": "413630", "category": 2 }
+    , "15": { "name": "20177 Taupe", "value": "4", "hex": "5A4D47", "category": 2 }
+    , "16": { "name": "207 SW-Pine", "value": "6", "hex": "626753", "category": 2 }
+    , "17": { "name": "23003 Dusty Brown", "value": "17", "hex": "B3A797", "category": 2 }
+    , "18": { "name": "23013 Smokey Brown", "value": "10", "hex": "81674C", "category": 2 }
+    , "19": { "name": "24030 Earth Tan", "value": "8", "hex": "866A52", "category": 2 }
+    , "20": { "name": "24034 Stone Beige", "value": "20", "hex": "B9A992", "category": 2 }
+    , "21": { "name": "24714 Oakwood Brown", "value": "2", "hex": "63432C", "category": 2 }
+    , "22": { "name": "24735 Maroon Brown", "value": "1", "hex": "573C33", "category": 2 }
+    , "23": { "name": "24933 Cream", "value": "36", "hex": "D5BF90", "category": 2 }
+    , "24": { "name": "24937 Duranodic Brown", "value": "4", "hex": "332E2A", "category": 2 }
+    , "27": { "name": "252 Muddy Clay", "value": "4", "hex": "877D73", "category": 2 }
+    , "28": { "name": "258 Saddle Brown", "value": "2", "hex": "815634", "category": 2 }
+    , "29": { "name": "278 Light Tangerine", "value": "17", "hex": "D08242", "category": 2 }
+    , "30": { "name": "28363 Navy", "value": "7", "hex": "40424F", "category": 2 }
+    , "33": { "name": "285 Dusty Blue", "value": "1", "hex": "4A5362", "category": 2 }
+    , "34": { "name": "288 SW Ecru", "value": "29", "hex": "D0C3A1", "category": 2 }
+    , "38": { "name": "30026 Titanium Grey", "value": "19", "hex": "93979A", "category": 2 }
+    , "39": { "name": "3007 Neutral Grey", "value": "10", "hex": "736F6E", "category": 2 }
+    , "40": { "name": "30096 Gunmetal Grey", "value": "9", "hex": "595961", "category": 2 }
+    , "53": { "name": "32341 Dark Grey", "value": "1", "hex": "815634", "category": 2 }
+    , "55": { "name": "33127 Angora Grey", "value": "6", "hex": "626A6C", "category": 2 }
+    , "66": { "name": "40230 Dusty Olive", "value": "4", "hex": "515443", "category": 2 }
+    , "67": { "name": "407 Chinese Red", "value": "5", "hex": "A23016", "category": 2 }
+    , "68": { "name": "420 Straw", "value": "23", "hex": "BEB491", "category": 2 }
+    , "69": { "name": "440 Sunrise", "value": "24", "hex": "E2BC6B", "category": 2 }
+    , "70": { "name": "446 Steam", "value": "25", "hex": "BDCDDA", "category": 2 }
+    , "71": { "name": "44930 Retro Green", "value": "5", "hex": "6B6E3F", "category": 2 }
+    , "72": { "name": "45183 Dark Green", "value": "7", "hex": "1B331C", "category": 2 }
+    , "75": { "name": "50043 Aged Plum", "value": "4", "hex": "3C2C2D", "category": 2 }
+    , "76": { "name": "50075 Dusty Rose", "value": "5", "hex": "827273", "category": 2 }
+    , "77": { "name": "50951 Eggplant", "value": "4", "hex": "302341", "category": 2 }
+    , "78": { "name": "51 Medium Mahogany", "value": "4", "hex": "392E2A", "category": 2 }
+    , "79": { "name": "51051 Burgundy", "value": "4", "hex": "371A1E", "category": 2 }
+    , "80": { "name": "60972 Orange", "value": "16", "hex": "D26D35", "category": 2 }
+    , "81": { "name": "62 Baja Wood", "value": "20", "hex": "B4ABA6", "category": 2 }
+    , "82": { "name": "6341 Red Cent", "value": "8", "hex": "96543E", "category": 2 }
+    , "83": { "name": "70002 Carnival Red", "value": "2", "hex": "B71E20", "category": 2 }
+    , "84": { "name": "70253 Purple Dusk", "value": "4", "hex": "675C60", "category": 2 }
+    , "85": { "name": "71204 Deep Orchid", "value": "4", "hex": "382940", "category": 2 }
+    , "86": { "name": "80231 Apricot", "value": "13", "hex": "B07E3F", "category": 2 }
+    , "87": { "name": "82483 Yellow", "value": "53", "hex": "FFB900", "category": 2 }
+    , "88": { "name": "8991 Clay", "value": "7", "hex": "855950", "category": 2 }
+    , "89": { "name": "9013 Putnam Ivory", "value": "24", "hex": "d0bfa1", "category": 2 }
+    , "90": { "name": "91134 Alpine White", "value": "38", "hex": "ffffff", "category": 2 }
+    , "91": { "name": "91134 White", "value": "76", "hex": "ffffff", "category": 2 }
+    , "92": { "name": "91272 Light Beige", "value": "27", "hex": "CDC7BB", "category": 2 }
+    , "93": { "name": "93352 Bone White", "value": "30", "hex": "DCCBBB", "category": 2 }
+    , "94": { "name": "9414 Black", "value": "8", "hex": "000000", "category": 2 }
+    , "95": { "name": "BR-32 Brown", "value": "2", "hex": "67523F", "category": 2 }
+  }
+  , "foreground": {
+        "25": { "name": "24998 Yellow", "value": "53", "hex": "ffb900", "category": 1 }
+      , "26": { "name": "25001 Red", "value": "9", "hex": "fe0000", "category": 1 }
+      , "31": { "name": "28364 Silver Grey", "value": "59", "hex": "666054", "category": 1 }
+      , "32": { "name": "28383 Burgundy", "value": "6", "hex": "4B1201", "category": 1 }
+      , "35": { "name": "29931 Silver", "value": "85", "hex": "858585", "category": 1 }
+      , "36": { "name": "29932 Gold", "value": "77", "hex": "95671c", "category": 1 }
+      , "37": { "name": "29933 Teal", "value": "11", "hex": "1f6678", "category": 1 }
+      , "41": { "name": "311-214 Ash", "value": "74", "hex": "f0e8e5", "category": 1 }
+      , "42": { "name": "311-302 China Blue", "value": "15", "hex": "585c68", "category": 1 }
+      , "43": { "name": "311-305 Light Grey", "value": "68", "hex": "dadada", "category": 1 }
+      , "44": { "name": "311-306 Pearl Grey", "value": "49", "hex": "acaead", "category": 1 }
+      , "45": { "name": "311-307 Charcoal Grey", "value": "9", "hex": "454138", "category": 1 }
+      , "46": { "name": "311-398 Graphite", "value": "24", "hex": "636363", "category": 1 }
+      , "47": { "name": "311-801 Antique Ivory", "value": "70", "hex": "fbefd9", "category": 1 }
+      , "48": { "name": "311-903 Black Forrest Green", "value": "12", "hex": "3d4d4c", "category": 1 }
+      , "49": { "name": "31631 Brown", "value": "2", "hex": "4F392B", "category": 1 }
+      , "50": { "name": "31753 Salmon", "value": "54", "hex": "e8c4c8", "category": 1 }
+      , "51": { "name": "31898 Seafoam", "value": "39", "hex": "93c1bf", "category": 1 }
+      , "52": { "name": "32291 Rust", "value": "11", "hex": "8e4731", "category": 1 }
+      , "54": { "name": "32726 Tan", "value": "24", "hex": "958979", "category": 1 }
+      , "56": { "name": "37033 Cream", "value": "81", "hex": "FFFBF0", "category": 1 }
+      , "57": { "name": "37037 Black", "value": "8", "hex": "000000", "category": 1 }
+      , "58": { "name": "37042 White", "value": "76", "hex": "ffffff", "category": 1 }
+      , "59": { "name": "37047 Taupe", "value": "19", "hex": "847D6D", "category": 1 }
+      , "60": { "name": "37048 Azure Blue", "value": "8", "hex": "095285", "category": 1 }
+      , "61": { "name": "37050 Candlewick", "value": "46", "hex": "bfb6b1", "category": 1 }
+      , "62": { "name": "37058 Chocolate Brown", "value": "6", "hex": "342e22", "category": 1 }
+      , "63": { "name": "37060 Pine Green", "value": "10", "hex": "225d57", "category": 1 }
+      , "64": { "name": "37065 Slate", "value": "11", "hex": "484445", "category": 1 }
+      , "65": { "name": "37070 Almond", "value": "54", "hex": "ede2c4", "category": 1 }
+      , "73": { "name": "45960 Grass", "value": "32", "hex": "8ab798", "category": 1 }
+      , "74": { "name": "45964 Maui Blue", "value": "31", "hex": "81a5df", "category": 1 }
+  }
+}
+            </pre>
+
+        </header>
+
+        <div id="colors" data-color-values='{
+  "background": {
+      "0": { "name": "10234 Misty Blue", "value": "8", "hex": "727A8F", "category": 2 }
+    , "1": { "name": "10563 Metalic Silver", "value": "93", "hex": "bbbbbb", "category": 2 }
+    , "2": { "name": "13 Rose", "value": "6", "hex": "895D5E", "category": 2 }
+    , "3": { "name": "142 Steel Blue", "value": "11", "hex": "788DA2", "category": 2 }
+    , "4": { "name": "144 Dark Blue Jean", "value": "4", "hex": "2E3547", "category": 2 }
+    , "5": { "name": "15 Scandinavian Sky", "value": "14", "hex": "9498A1", "category": 2 }
+    , "6": { "name": "15451 Bristol Blue", "value": "11", "hex": "29309B", "category": 2 }
+    , "7": { "name": "166 Shell Beige", "value": "26", "hex": "C2B6B6", "category": 2 }
+    , "8":  { "name": "167 Army Green", "value": "2", "hex": "40424F", "category": 2 }
+    , "9":  { "name": "173 Hazy Green", "value": "5", "hex": "3E433F", "category": 2 }
+    , "10": { "name": "199 Yellow Cream", "value": "20", "hex": "0B0819", "category": 2 }
+    , "11": { "name": "20044 Brown Mustard", "value": "4", "hex": "60513C", "category": 2 }
+    , "12": { "name": "20060 Moss", "value": "5", "hex": "867B5D", "category": 2 }
+    , "13": { "name": "20126 Twiggy Brown", "value": "9", "hex": "877D73", "category": 2 }
+    , "14": { "name": "20134 Nugat Brown", "value": "4", "hex": "413630", "category": 2 }
+    , "15": { "name": "20177 Taupe", "value": "4", "hex": "5A4D47", "category": 2 }
+    , "16": { "name": "207 SW-Pine", "value": "6", "hex": "626753", "category": 2 }
+    , "17": { "name": "23003 Dusty Brown", "value": "17", "hex": "B3A797", "category": 2 }
+    , "18": { "name": "23013 Smokey Brown", "value": "10", "hex": "81674C", "category": 2 }
+    , "19": { "name": "24030 Earth Tan", "value": "8", "hex": "866A52", "category": 2 }
+    , "20": { "name": "24034 Stone Beige", "value": "20", "hex": "B9A992", "category": 2 }
+    , "21": { "name": "24714 Oakwood Brown", "value": "2", "hex": "63432C", "category": 2 }
+    , "22": { "name": "24735 Maroon Brown", "value": "1", "hex": "573C33", "category": 2 }
+    , "23": { "name": "24933 Cream", "value": "36", "hex": "D5BF90", "category": 2 }
+    , "24": { "name": "24937 Duranodic Brown", "value": "4", "hex": "332E2A", "category": 2 }
+    , "27": { "name": "252 Muddy Clay", "value": "4", "hex": "877D73", "category": 2 }
+    , "28": { "name": "258 Saddle Brown", "value": "2", "hex": "815634", "category": 2 }
+    , "29": { "name": "278 Light Tangerine", "value": "17", "hex": "D08242", "category": 2 }
+    , "30": { "name": "28363 Navy", "value": "7", "hex": "40424F", "category": 2 }
+    , "33": { "name": "285 Dusty Blue", "value": "1", "hex": "4A5362", "category": 2 }
+    , "34": { "name": "288 SW Ecru", "value": "29", "hex": "D0C3A1", "category": 2 }
+    , "38": { "name": "30026 Titanium Grey", "value": "19", "hex": "93979A", "category": 2 }
+    , "39": { "name": "3007 Neutral Grey", "value": "10", "hex": "736F6E", "category": 2 }
+    , "40": { "name": "30096 Gunmetal Grey", "value": "9", "hex": "595961", "category": 2 }
+    , "53": { "name": "32341 Dark Grey", "value": "1", "hex": "815634", "category": 2 }
+    , "55": { "name": "33127 Angora Grey", "value": "6", "hex": "626A6C", "category": 2 }
+    , "66": { "name": "40230 Dusty Olive", "value": "4", "hex": "515443", "category": 2 }
+    , "67": { "name": "407 Chinese Red", "value": "5", "hex": "A23016", "category": 2 }
+    , "68": { "name": "420 Straw", "value": "23", "hex": "BEB491", "category": 2 }
+    , "69": { "name": "440 Sunrise", "value": "24", "hex": "E2BC6B", "category": 2 }
+    , "70": { "name": "446 Steam", "value": "25", "hex": "BDCDDA", "category": 2 }
+    , "71": { "name": "44930 Retro Green", "value": "5", "hex": "6B6E3F", "category": 2 }
+    , "72": { "name": "45183 Dark Green", "value": "7", "hex": "1B331C", "category": 2 }
+    , "75": { "name": "50043 Aged Plum", "value": "4", "hex": "3C2C2D", "category": 2 }
+    , "76": { "name": "50075 Dusty Rose", "value": "5", "hex": "827273", "category": 2 }
+    , "77": { "name": "50951 Eggplant", "value": "4", "hex": "302341", "category": 2 }
+    , "78": { "name": "51 Medium Mahogany", "value": "4", "hex": "392E2A", "category": 2 }
+    , "79": { "name": "51051 Burgundy", "value": "4", "hex": "371A1E", "category": 2 }
+    , "80": { "name": "60972 Orange", "value": "16", "hex": "D26D35", "category": 2 }
+    , "81": { "name": "62 Baja Wood", "value": "20", "hex": "B4ABA6", "category": 2 }
+    , "82": { "name": "6341 Red Cent", "value": "8", "hex": "96543E", "category": 2 }
+    , "83": { "name": "70002 Carnival Red", "value": "2", "hex": "B71E20", "category": 2 }
+    , "84": { "name": "70253 Purple Dusk", "value": "4", "hex": "675C60", "category": 2 }
+    , "85": { "name": "71204 Deep Orchid", "value": "4", "hex": "382940", "category": 2 }
+    , "86": { "name": "80231 Apricot", "value": "13", "hex": "B07E3F", "category": 2 }
+    , "87": { "name": "82483 Yellow", "value": "53", "hex": "FFB900", "category": 2 }
+    , "88": { "name": "8991 Clay", "value": "7", "hex": "855950", "category": 2 }
+    , "89": { "name": "9013 Putnam Ivory", "value": "24", "hex": "d0bfa1", "category": 2 }
+    , "90": { "name": "91134 Alpine White", "value": "38", "hex": "ffffff", "category": 2 }
+    , "91": { "name": "91134 White", "value": "76", "hex": "ffffff", "category": 2 }
+    , "92": { "name": "91272 Light Beige", "value": "27", "hex": "CDC7BB", "category": 2 }
+    , "93": { "name": "93352 Bone White", "value": "30", "hex": "DCCBBB", "category": 2 }
+    , "94": { "name": "9414 Black", "value": "8", "hex": "000000", "category": 2 }
+    , "95": { "name": "BR-32 Brown", "value": "2", "hex": "67523F", "category": 2 }
+  }
+  , "foreground": {
+        "25": { "name": "24998 Yellow", "value": "53", "hex": "ffb900", "category": 1 }
+      , "26": { "name": "25001 Red", "value": "9", "hex": "fe0000", "category": 1 }
+      , "31": { "name": "28364 Silver Grey", "value": "59", "hex": "666054", "category": 1 }
+      , "32": { "name": "28383 Burgundy", "value": "6", "hex": "4B1201", "category": 1 }
+      , "35": { "name": "29931 Silver", "value": "85", "hex": "858585", "category": 1 }
+      , "36": { "name": "29932 Gold", "value": "77", "hex": "95671c", "category": 1 }
+      , "37": { "name": "29933 Teal", "value": "11", "hex": "1f6678", "category": 1 }
+      , "41": { "name": "311-214 Ash", "value": "74", "hex": "f0e8e5", "category": 1 }
+      , "42": { "name": "311-302 China Blue", "value": "15", "hex": "585c68", "category": 1 }
+      , "43": { "name": "311-305 Light Grey", "value": "68", "hex": "dadada", "category": 1 }
+      , "44": { "name": "311-306 Pearl Grey", "value": "49", "hex": "acaead", "category": 1 }
+      , "45": { "name": "311-307 Charcoal Grey", "value": "9", "hex": "454138", "category": 1 }
+      , "46": { "name": "311-398 Graphite", "value": "24", "hex": "636363", "category": 1 }
+      , "47": { "name": "311-801 Antique Ivory", "value": "70", "hex": "fbefd9", "category": 1 }
+      , "48": { "name": "311-903 Black Forrest Green", "value": "12", "hex": "3d4d4c", "category": 1 }
+      , "49": { "name": "31631 Brown", "value": "2", "hex": "4F392B", "category": 1 }
+      , "50": { "name": "31753 Salmon", "value": "54", "hex": "e8c4c8", "category": 1 }
+      , "51": { "name": "31898 Seafoam", "value": "39", "hex": "93c1bf", "category": 1 }
+      , "52": { "name": "32291 Rust", "value": "11", "hex": "8e4731", "category": 1 }
+      , "54": { "name": "32726 Tan", "value": "24", "hex": "958979", "category": 1 }
+      , "56": { "name": "37033 Cream", "value": "81", "hex": "FFFBF0", "category": 1 }
+      , "57": { "name": "37037 Black", "value": "8", "hex": "000000", "category": 1 }
+      , "58": { "name": "37042 White", "value": "76", "hex": "ffffff", "category": 1 }
+      , "59": { "name": "37047 Taupe", "value": "19", "hex": "847D6D", "category": 1 }
+      , "60": { "name": "37048 Azure Blue", "value": "8", "hex": "095285", "category": 1 }
+      , "61": { "name": "37050 Candlewick", "value": "46", "hex": "bfb6b1", "category": 1 }
+      , "62": { "name": "37058 Chocolate Brown", "value": "6", "hex": "342e22", "category": 1 }
+      , "63": { "name": "37060 Pine Green", "value": "10", "hex": "225d57", "category": 1 }
+      , "64": { "name": "37065 Slate", "value": "11", "hex": "484445", "category": 1 }
+      , "65": { "name": "37070 Almond", "value": "54", "hex": "ede2c4", "category": 1 }
+      , "73": { "name": "45960 Grass", "value": "32", "hex": "8ab798", "category": 1 }
+      , "74": { "name": "45964 Maui Blue", "value": "31", "hex": "81a5df", "category": 1 }
+  }
+}'></div>
+
+        <!-- draw the color calculator output to #output -->
+
+        <h2>My Color Contrast Calculator</h2>
+        <div id='output'></div>
+    </div>
+</body>
+</html>
